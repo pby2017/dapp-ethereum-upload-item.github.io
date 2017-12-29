@@ -17,7 +17,8 @@
 	  판매자: <input type="text" id="itemOwner" style="width: 150px;">
 	  품명: <input type="text" id="itemName" style="width: 150px;">
 	  가격: <input type="text" id="itemPrice" style="width: 150px;">
-	  상품번호: <span id="itemNumber"></span>
+	  <br>상품번호: <span id="itemNumber"></span>
+	  <br><button onclick="getItemNumber()">상품번호생성</button><button onclick="createRegistrationHash()">물건등록해쉬생성</button>
 		
       <li><input type="text" id="newValue"><button onclick="setValue()">새 값으로 저장하기</button>
         <div id="result"></div></li>
@@ -96,6 +97,19 @@
         });
       });
     }
+	
+	function getItemNumber()
+	{
+	  
+	  var date = new Date();
+	  document.getElementById('itemNumber').innerHTML = date.getFullYear().toString()+date.getMonth().toString()+date.getDate().toString()
+	  +date.getHours().toString()+date.getMinutes().toString()+date.getSeconds().toString();
+	}
+	
+	function createRegistrationHash()
+	{
+	
+	}
   </script>
 </html>
 
