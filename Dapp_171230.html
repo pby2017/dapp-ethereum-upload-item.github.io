@@ -20,7 +20,7 @@
 	  <br>상품번호: <span id="itemNumber"></span>
 	  <br><button onclick="getItemNumber()">상품번호생성</button><button onclick="createRegistrationHash()">물건등록해쉬생성</button>
 		
-      <li><input type="text" id="newValue"><button onclick="setValue()">새 값으로 저장하기</button>
+      <li><span type="text" id="newValue"></span><button onclick="setValue()">새 값으로 저장하기</button>
         <div id="result"></div></li>
       <li>새 값을 저장한 후 팬딩 트랜잭션이 블록에 포함되면 자동으로 페이지가 업데이트될 것입니다.</li>
     </ul>
@@ -30,8 +30,36 @@
   <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
 
   <script>
-    var contractAddress = "0x6d23548f621ce9d5770149b5780e7bc7140964d7";
-    var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"}];
+    var contractAddress = "0xecce49ad2201ff93e7db395dfa4efb12fbdcef28";
+    var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	};
     var simpleStorageContract;
     var simpleStorage;
 
@@ -68,7 +96,7 @@
     function getValue()
     {
       simpleStorage.get(function(e,r){
-        document.getElementById('storedData').innerHTML = r.toNumber();
+        document.getElementById('storedData').innerHTML = r;
       });
       web3.eth.getBlockNumber(function(e,r){
         document.getElementById('lastBlock').innerHTML = r;
@@ -77,7 +105,7 @@
 
     function setValue()
     {
-      var newValue = document.getElementById('newValue').value;
+      var newValue = document.getElementById('newValue').innerHTML;
       var txid;
       simpleStorage.set(newValue, function(e,r){
         document.getElementById('result').innerHTML = 'Transaction id: '+r+'<span id="pending" style="color:red;">(Pending)</span>';
@@ -117,10 +145,14 @@
 	function createRegistrationHash()
 	{
 	  var message = document.getElementById('itemNumber').innerHTML;
-	  document.getElementById('newValue').value = web3.sha3(message);
+	  document.getElementById('newValue').innerHTML = web3.sha3(message);
 	}
   </script>
 </html>
 
-<!-- my contract addr : https://ropsten.etherscan.io/address/0x6d23548f621ce9d5770149b5780e7bc7140964d7 -->
 <!-- my wallet : 0xf4b24d53ef8f613ecdfa6fde7f748ecf340fd7ea -->
+<!-- my contract addr(uint/^0.4.0) : https://ropsten.etherscan.io/address/0x6d23548f621ce9d5770149b5780e7bc7140964d7 -->
+<!-- my wallet : 0x56ccd1f7301e02d29a6c821076f183942255534d -->
+<!-- my contract addr(string/^0.4.19) : 0xecce49ad2201ff93e7db395dfa4efb12fbdcef28-->
+<!-- my contract addr(string/^0.4.11) : 0x94774323a4e6740c6230513131f532efa171c778-->
+<!-- my contract addr(string/^0.4.11) : 0x6a7d9a23a8b3710d99152430cc0b88aaa6d70b28-->
